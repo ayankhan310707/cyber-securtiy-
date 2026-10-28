@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>Cyber Defense Sentinel // Authentication Terminal</title>
+  
+  <!-- Google Fonts: Space Grotesk, Inter, JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin=""/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet"/>
+  
+  <!-- Material Symbols Outlined -->
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com?plugins=forms"></script>
+  
+  <!-- Tailwind Configuration matching DESIGN.md -->
+  <script>
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "surface": "#101412",
+            "surface-container-lowest": "#0b0f0d",
+            "surface-container-low": "#181c1a",
+            "surface-container": "#1c211e",
+            "surface-container-high": "#272b28",
+            "surface-container-highest": "#313633",
+            "on-surface": "#e0e3df",
+            "on-surface-variant": "#b9cbb9",
+            "primary": "#f1ffef",
+            "on-primary": "#003919",
+            "primary-container": "#00ff88",
+            "on-primary-container": "#007139",
+            "primary-fixed": "#60ff99",
+            "secondary-container": "#00eefc",
+            "on-secondary-container": "#00686f",
+            "secondary-fixed": "#7df4ff",
+            "error": "#ff3366",
+            "error-container": "#93000a",
+            "outline": "#849585",
+            "outline-variant": "#1a3628",
+            "background": "#080c0a"
+          },
+          fontFamily: {
+            "display-xl": ["Space Grotesk", "sans-serif"],
+            "body-md": ["Inter", "sans-serif"],
+            "mono": ["JetBrains Mono", "monospace"]
+          }
+        }
+      }
+    };
+  </script>
+
+  <!-- Custom Tactical Stylesheet -->
+  <link rel="stylesheet" href="css/styles.css"/>
+</head>
+<body class="bg-background text-on-surface antialiased font-body-md cyber-grid-canvas min-h-screen flex flex-col justify-between selection:bg-primary-container selection:text-surface-container-lowest">
+
+  <!-- Top Simple Navigation Bar -->
+  <header class="w-full border-b border-outline-variant bg-surface/80 backdrop-blur-md px-6 py-4">
+    <div class="max-w-7xl mx-auto flex items-center justify-between">
+      <a href="index.html" class="flex items-center gap-3 group">
+        <div class="w-9 h-9 rounded-lg bg-surface-container border border-primary-container/40 flex items-center justify-center glow-primary-box group-hover:border-primary-container transition-colors">
+          <span class="material-symbols-outlined text-primary-container text-xl" style="font-variation-settings: 'FILL' 1;">shield</span>
+        </div>
+        <div>
+          <span class="font-display-xl text-base font-bold text-primary tracking-wide">Cyber Defense Sentinel</span>
+          <span class="font-mono text-[10px] text-primary-container block -mt-0.5">SECURE AUTH GATEWAY</span>
+        </div>
+      </a>
+      
+      <a href="index.html" class="font-mono text-xs text-outline hover:text-primary-container flex items-center gap-1.5 transition-colors">
+        <span class="material-symbols-outlined text-sm">arrow_back</span>
+        <span>Back to Portal</span>
+      </a>
+    </div>
+  </header>
+
+  <!-- Main Login & OTP Enclave -->
+  <main class="flex-grow flex items-center justify-center px-4 py-12">
+    <div class="w-full max-w-lg bg-surface-container-lowest/95 border border-outline-variant rounded-2xl p-6 sm:p-8 glow-card-edge backdrop-blur-xl relative space-y-6">
+      
+      <!-- Outer HUD Reticles -->
+      <div class="absolute -top-1.5 -left-1.5 w-4 h-4 border-t-2 border-l-2 border-primary-container"></div>
+      <div class="absolute -top-1.5 -right-1.5 w-4 h-4 border-t-2 border-r-2 border-primary-container"></div>
+      <div class="absolute -bottom-1.5 -left-1.5 w-4 h-4 border-b-2 border-l-2 border-secondary-container"></div>
+      <div class="absolute -bottom-1.5 -right-1.5 w-4 h-4 border-b-2 border-r-2 border-secondary-container"></div>
+
+      <!-- Header Title -->
+      <div class="text-center space-y-2">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-surface-container border border-primary-container/30 font-mono text-[11px] text-primary-container">
+          <span class="w-2 h-2 rounded-full bg-primary-container animate-ping"></span>
+          <span>ZERO-TRUST ENCLAVE</span>
+        </div>
+        <h1 class="font-display-xl text-2xl sm:text-3xl font-bold text-primary">Student Identity Access</h1>
+        <p class="font-body-md text-xs sm:text-sm text-outline max-w-sm mx-auto">
+          Authenticate with your name, university or personal email, phone number, and simulated OTP token.
+        </p>
+      </div>
+
+      <!-- Quick Demo Identity Button -->
+      <div class="p-3 rounded-xl bg-surface-container/70 border border-outline-variant flex items-center justify-between gap-2">
+        <div class="flex items-center gap-2 text-xs font-mono text-outline">
+          <span class="material-symbols-outlined text-secondary-container text-base">badge</span>
+          <span>Need sample demo credentials?</span>
+        </div>
+        <button id="btn-fill-demo" type="button" class="font-mono text-xs font-bold text-primary-container hover:underline px-2.5 py-1 rounded bg-surface-container border border-primary-container/30 hover:border-primary-container transition-all">
+          Fill Demo Student
+        </button>
+      </div>
+
+      <!-- Login Form -->
+      <form id="login-form" class="space-y-4">
+        
+        <!-- 1. Full Name -->
+        <div class="space-y-1.5">
+          <label for="auth-name" class="font-mono text-xs font-bold text-on-surface flex items-center gap-1.5">
+            <span class="material-symbols-outlined text-sm text-primary-container">person</span>
+            <span>Full Name <span class="text-error">*</span></span>
+          </label>
+          <input id="auth-name" type="text" required placeholder="e.g. Alex Mercer / Rohan Sharma" class="w-full bg-surface-container-low border border-outline-variant rounded-xl px-4 py-2.5 text-on-surface placeholder:text-outline font-mono text-sm focus:border-primary-container focus:ring-1 focus:ring-primary-container"/>
+        </div>
+
+        <!-- 2. Email Address -->
+        <div class="space-y-1.5">
+          <label for="auth-email" class="font-mono text-xs font-bold text-on-surface flex items-center gap-1.5">
+            <span class="material-symbols-outlined text-sm text-secondary-container">mail</span>
+            <span>Email Address <span class="text-error">*</span></span>
+          </label>
+          <input id="auth-email" type="email" required placeholder="e.g. alex.mercer@campus.edu" class="w-full bg-surface-container-low border border-outline-variant rounded-xl px-4 py-2.5 text-on-surface placeholder:text-outline font-mono text-sm focus:border-primary-container focus:ring-1 focus:ring-primary-container"/>
+        </div>
+
+        <!-- 3. Phone Number -->
+        <div class="space-y-1.5">
+          <label for="auth-phone" class="font-mono text-xs font-bold text-on-surface flex items-center gap-1.5">
+            <span class="material-symbols-outlined text-sm text-primary-container">smartphone</span>
+            <span>Mobile Phone Number <span class="text-error">*</span></span>
+          </label>
+          <div class="flex gap-2">
+            <select id="auth-country-code" class="bg-surface-container-low border border-outline-variant rounded-xl px-3 py-2.5 text-on-surface font-mono text-xs focus:border-primary-container focus:ring-1 focus:ring-primary-container w-28">
+              <option value="+91">+91 (IN)</option>
+              <option value="+1">+1 (US)</option>
+              <option value="+44">+44 (UK)</option>
+              <option value="+61">+61 (AU)</option>
+              <option value="+971">+971 (UAE)</option>
+              <option value="+65">+65 (SG)</option>
+            </select>
+            <input id="auth-phone" type="tel" required placeholder="98765-43210" pattern="[0-9\s\-]{7,15}" class="flex-grow bg-surface-container-low border border-outline-variant rounded-xl px-4 py-2.5 text-on-surface placeholder:text-outline font-mono text-sm focus:border-primary-container focus:ring-1 focus:ring-primary-container"/>
+          </div>
+        </div>
+
+        <!-- 4. OTP Verification Section -->
+        <div class="pt-2 border-t border-outline-variant/60 space-y-3">
+          <div class="flex items-center justify-between">
+            <label for="auth-otp" class="font-mono text-xs font-bold text-on-surface flex items-center gap-1.5">
+              <span class="material-symbols-outlined text-sm text-secondary-container">key</span>
+              <span>6-Digit Verification OTP <span class="text-error">*</span></span>
+            </label>
+            <button id="btn-send-otp" type="button" class="font-mono text-xs font-bold text-primary-container hover:underline px-2.5 py-1 rounded bg-surface-container border border-primary-container/30 hover:border-primary-container transition-all flex items-center gap-1">
+              <span class="material-symbols-outlined text-xs">send_to_mobile</span>
+              <span id="btn-send-otp-text">Send OTP</span>
+            </button>
+          </div>
+
+          <!-- OTP Input Field -->
+          <div class="relative">
+            <input id="auth-otp" type="text" maxlength="6" pattern="[0-9]{6}" placeholder="Enter 6-digit code (e.g. 849201)" class="w-full bg-surface-container-low border border-outline-variant rounded-xl px-4 py-2.5 text-on-surface font-mono text-base tracking-widest text-center focus:border-primary-container focus:ring-1 focus:ring-primary-container uppercase"/>
+            <button id="btn-autofill-otp" type="button" class="hidden absolute right-2.5 top-1/2 -translate-y-1/2 font-mono text-[10px] text-secondary-container bg-surface-container px-2 py-1 rounded border border-secondary-container/30 hover:bg-surface-container-high transition-colors">
+              Paste OTP
+            </button>
+          </div>
+
+          <!-- Simulated SMS OTP Alert Drawer -->
+          <div id="simulated-otp-banner" class="hidden p-3.5 rounded-xl bg-surface-container border border-secondary-container/40 space-y-1.5 animate-fadeIn">
+            <div class="flex items-center justify-between font-mono text-[11px]">
+              <span class="text-secondary-container flex items-center gap-1">
+                <span class="material-symbols-outlined text-xs">sms</span>
+                <span>SIMULATED DEFENSE SMS</span>
+              </span>
+              <span class="text-outline">Just now</span>
+            </div>
+            <p class="font-mono text-xs text-on-surface leading-relaxed">
+              [AegisSec Verification] Your 6-digit OTP is: <strong id="simulated-otp-code" class="text-primary-container text-sm font-bold tracking-widest select-all">------</strong>. Never share this code with anyone.
+            </p>
+          </div>
+        </div>
+
+        <!-- Submit Button -->
+        <button id="btn-submit-auth" type="submit" class="w-full bg-primary-container text-on-primary-container font-mono text-sm font-bold py-3.5 rounded-xl glow-primary-box hover:brightness-110 active:scale-95 transition-all flex items-center justify-center gap-2 mt-4">
+          <span class="material-symbols-outlined text-lg">login</span>
+          <span>Verify &amp; Enter Cyber Sentinel</span>
+        </button>
+      </form>
+
+      <!-- Educational Privacy Guarantee -->
+      <div class="p-3.5 rounded-xl bg-surface-container-low border border-outline-variant font-mono text-[11px] text-outline space-y-1">
+        <div class="flex items-center gap-1.5 text-primary-container font-bold">
+          <span class="material-symbols-outlined text-xs">lock</span>
+          <span>Local Educational Sandbox Guarantee</span>
+        </div>
+        <p class="font-body-md text-xs text-on-surface-variant leading-relaxed">
+          Zero data transmission: Phone numbers, emails, and names entered are saved strictly in your local browser sandbox (<code>localStorage</code>) to personalize your learning dashboard. We never collect or transmit credentials.
+        </p>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Simple Footer -->
+  <footer class="w-full border-t border-outline-variant bg-surface/80 py-4 px-6 text-center font-mono text-xs text-outline">
+    <p>© 2026 Cyber Defense Sentinel • Educational Awareness Suite • All Rights Reserved</p>
+  </footer>
+
+  <!-- Login Application Script -->
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      let generatedOtp = null;
+      let countdownTimer = null;
+      let secondsLeft = 0;
+
+      const nameInput = document.getElementById("auth-name");
+      const emailInput = document.getElementById("auth-email");
+      const countryCodeSelect = document.getElementById("auth-country-code");
+      const phoneInput = document.getElementById("auth-phone");
+      const otpInput = document.getElementById("auth-otp");
+      const btnSendOtp = document.getElementById("btn-send-otp");
+      const btnSendOtpText = document.getElementById("btn-send-otp-text");
+      const simulatedBanner = document.getElementById("simulated-otp-banner");
+      const simulatedOtpCode = document.getElementById("simulated-otp-code");
+      const btnAutofillOtp = document.getElementById("btn-autofill-otp");
+      const btnFillDemo = document.getElementById("btn-fill-demo");
+      const loginForm = document.getElementById("login-form");
+
+      // Check if user already logged in, prefill
+      const existingUser = localStorage.getItem("cyber_sentinel_user");
+      if (existingUser) {
+        try {
+          const user = JSON.parse(existingUser);
+          if (user.name) nameInput.value = user.name;
+          if (user.email) emailInput.value = user.email;
+          if (user.phone) phoneInput.value = user.phone;
+        } catch (e) {}
+      }
+
+      // Demo Identity Button
+      btnFillDemo.addEventListener("click", () => {
+        nameInput.value = "Rohan Sharma";
+        emailInput.value = "rohan.sharma@campus.edu";
+        phoneInput.value = "98765-43210";
+        showSimulatedOtp();
+      });
+
+      // Send OTP Action
+      function showSimulatedOtp() {
+        const phone = phoneInput.value.trim();
+        if (!phone) {
+          alert("Please enter a phone number first.");
+          phoneInput.focus();
+          return;
+        }
+
+        // Generate a 6-digit random code
+        generatedOtp = Math.floor(100000 + Math.random() * 900000).toString();
+        simulatedOtpCode.textContent = generatedOtp;
+        simulatedBanner.classList.remove("hidden");
+        btnAutofillOtp.classList.remove("hidden");
+
+        // Start 30s countdown
+        secondsLeft = 30;
+        btnSendOtp.disabled = true;
+        btnSendOtp.classList.add("opacity-50", "cursor-not-allowed");
+        
+        clearInterval(countdownTimer);
+        countdownTimer = setInterval(() => {
+          secondsLeft--;
+          if (secondsLeft > 0) {
+            btnSendOtpText.textContent = `Resend (${secondsLeft}s)`;
+          } else {
+            clearInterval(countdownTimer);
+            btnSendOtpText.textContent = "Resend OTP";
+            btnSendOtp.disabled = false;
+            btnSendOtp.classList.remove("opacity-50", "cursor-not-allowed");
+          }
+        }, 1000);
+
+        otpInput.focus();
+      }
+
+      btnSendOtp.addEventListener("click", showSimulatedOtp);
+
+      // Auto-fill OTP button
+      btnAutofillOtp.addEventListener("click", () => {
+        if (generatedOtp) {
+          otpInput.value = generatedOtp;
+        }
+      });
+
+      // Form submission
+      loginForm.addEventListener("submit", (e) => {
+        e.preventDefault();
+
+        const name = nameInput.value.trim();
+        const email = emailInput.value.trim();
+        const fullPhone = `${countryCodeSelect.value} ${phoneInput.value.trim()}`;
+        const enteredOtp = otpInput.value.trim();
+
+        if (!name || !email || !phoneInput.value.trim()) {
+          alert("Please complete all required fields (Name, Email, Phone Number).");
+          return;
+        }
+
+        if (!generatedOtp) {
+          alert("Please click 'Send OTP' to receive your verification code first.");
+          showSimulatedOtp();
+          return;
+        }
+
+        if (enteredOtp !== generatedOtp) {
+          alert(`Invalid OTP code entered. Please enter the simulated OTP: ${generatedOtp}`);
+          otpInput.focus();
+          return;
+        }
+
+        // Save User Session into localStorage
+        const userProfile = {
+          name: name,
+          email: email,
+          phone: fullPhone,
+          verified: true,
+          authenticatedAt: new Date().toISOString()
+        };
+
+        localStorage.setItem("cyber_sentinel_user", JSON.stringify(userProfile));
+
+        // Redirect to homepage with active authenticated status
+        window.location.href = "index.html?auth=success";
+      });
+    });
+  </script>
+</body>
+</html>
